@@ -9,7 +9,18 @@ namespace Balance.DataAccess
 
         public void Insert(TransactionAddDto transaction)
         {
-            // TODO: invullen
+            DateTime createdAt = DateTime.Now;
+            DateTime updatedAt = DateTime.Now;
+            List<string> row = new List<string>
+            {
+                transaction.Name,
+                transaction.Amount.ToString(),
+                createdAt.ToString(),
+                updatedAt.ToString()
+            };
+
+            using StreamWriter writer = new StreamWriter("transactions.csv", true);
+            writer.WriteLine(string.Join('\t', row));
         }
 
         public List<TransactionDto> GetAll()
@@ -21,7 +32,7 @@ namespace Balance.DataAccess
                 return new();
             }
 
-            IEnumerable<string> rows = System.IO.File.ReadAllText(filePath).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            IEnumerable<string> rows = File.ReadAllText(filePath).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             foreach (string row in rows)
             {
                 IEnumerable<string> rowValues = row.Split(separator, StringSplitOptions.RemoveEmptyEntries).ToList();
