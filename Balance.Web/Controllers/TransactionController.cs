@@ -1,29 +1,31 @@
-﻿using Balance.Web.Models;
+﻿using Balance.DataAccess;
+using Balance.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Balance.Web.Controllers
 {
     public class TransactionController : Controller
     {
+        private readonly TransactionRepository _repository;
+
+        public TransactionController()
+        {
+            _repository = new TransactionRepository();
+        }
+
         public IActionResult Index()
         {
-            string filePath = "transactions.csv";
             TransactionListViewModel viewModel = new TransactionListViewModel();
 
-            if (!System.IO.File.Exists(filePath))
-            {
-                return View(viewModel);
-            }
+            var transactions = _repository.GetAll();
 
-            IEnumerable<string> rows = System.IO.File.ReadAllText("transactions.csv").Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string row in rows)
+            foreach (var dto in transactions)
             {
-                IEnumerable<string> rowValues = row.Split('\t', StringSplitOptions.RemoveEmptyEntries).ToList();
                 viewModel.Transactions.Add(new TransactionListItemViewModel
                 {
-                    Name = rowValues.ElementAt(0),
-                    Amount = Convert.ToInt32(rowValues.ElementAt(1)),
-                    CreatedAt = Convert.ToDateTime(rowValues.ElementAt(2)),
+                    Amount = dto.Amount,
+                    CreatedAt = dto.CreatedAt,
+                    Name = dto.Name
                 });
             }
 
@@ -46,18 +48,11 @@ namespace Balance.Web.Controllers
                 return View();
             }
 
-            DateTime createdAt = DateTime.Now;
-            DateTime updatedAt = DateTime.Now;
-            List<string> row = new List<string>
+            _repository.Insert(new DataAccess.Dto.TransactionAddDto
             {
-                name,
-                amount.Value.ToString(),
-                createdAt.ToString(),
-                updatedAt.ToString()
-            };
-
-            using StreamWriter writer = new StreamWriter("transactions.csv", true);
-            writer.WriteLine(string.Join('\t', row));
+                Name = name,
+                Amount = amount.Value
+            });
 
             return RedirectToAction("Index");
         }
