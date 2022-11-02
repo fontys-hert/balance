@@ -17,6 +17,7 @@ namespace Balance.Web.Controllers
         {
             TransactionListViewModel viewModel = new TransactionListViewModel();
 
+            // TODO: Erg veel logica hier. Weg ermee?
             var transactions = _repository.GetAll();
 
             foreach (var dto in transactions)
@@ -48,6 +49,7 @@ namespace Balance.Web.Controllers
                 return View();
             }
 
+            // TODO: Erg veel logica hier. Weg ermee?
             _repository.Insert(new DataAccess.Dto.TransactionAddDto
             {
                 Name = name,
