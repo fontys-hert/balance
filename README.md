@@ -13,8 +13,7 @@ Ik ben er echter nog niet aan toegekomen om de code wat beter te structureren.
 
 Er zijn dus een aantal zaken die moeten gebeuren:
 1. De code die verantwoordelijk is voor het opslaan van gegevens moet verhuizen naar de DataAccess
-2. Ergens heb ik nog mijn database code rondslingeren... 
-3. Er zit nog altijd code in die controller en er komt nog altijd code bij. Kan dat minder?
 
+Zodra je klaar ben met 1, laat je docent de oplossing zien en ga verder op de aangewezen branch
 
 
