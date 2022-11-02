@@ -1,0 +1,24 @@
+﻿@model TransactionAddViewModel
+
+@{
+}
+
+<h1>Voeg transactie toe</h1>
+
+<form method="post">
+    <div asp-validation-summary="All"></div>
+
+    <p>
+        <label class="form-label" asp-for="Name">Naam</label>
+        <input class="form-control" asp-for="Name" />
+    </p>
+
+    <p>
+        <label class="form-label" asp-for="Amount">Bedrag</label>
+        <input class="form-control" type="number" asp-for="Amount" />
+    </p>
+
+    <p>
+        <button class="btn btn-primary" type="submit">Voeg toe</button>
+    </p>
+</form>

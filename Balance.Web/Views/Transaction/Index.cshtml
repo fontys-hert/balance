@@ -1,0 +1,34 @@
+﻿@model TransactionListViewModel
+
+<h1>Transactie overzicht</h1>
+
+<p>
+    <a class="btn btn-link" asp-controller="Transaction" asp-action="Add">Voeg transactie toe</a>
+</p>
+
+@if (Model.Transactions.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Naam</th>
+                <th>Bedrag</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model.Transactions)
+            {
+            <tr>
+                <td>@transaction.CreatedAt.ToLongDateString()</td>
+                <td>@transaction.Name</td>
+                <td>@transaction.Amount</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Er zijn op dit moment geen transacties. <a asp-controller="Transaction" asp-action="Add">Klik hier</a> om er eentje toe te voegen</p>
+}
