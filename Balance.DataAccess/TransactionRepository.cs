@@ -19,7 +19,7 @@ namespace Balance.DataAccess
                 updatedAt.ToString()
             };
 
-            using StreamWriter writer = new StreamWriter("transactions.csv", true);
+            using StreamWriter writer = new StreamWriter(filePath, true);
             writer.WriteLine(string.Join('\t', row));
         }
 
